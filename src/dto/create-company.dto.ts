@@ -11,13 +11,17 @@ export class CreateCompanyDto {
   @IsNotEmpty()
   @MinLength(3)
   name: string;
+
   @IsString()
   @IsNotEmpty()
   phone: string;
+
   @IsOptional()
   address?: string;
+
   @IsOptional()
   web?: string;
+
   @IsBoolean()
   @IsOptional()
   is_active?: boolean;
