@@ -2,8 +2,11 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Companies } from 'src/shemas/companies.schema';
-import { CreateCompanyDto } from 'src/dto/create-company.dto';
-import { UpdateCompanyDto } from 'src/dto/update-company.dto';
+import {
+  CompanyInput,
+  FindCompanyInput,
+  UpdateCompanyInput,
+} from './inputes/company.input';
 
 @Injectable()
 export class CompaniesService {
@@ -11,24 +14,28 @@ export class CompaniesService {
     @InjectModel(Companies.name) private companiesModel: Model<Companies>,
   ) {}
 
-  finAll() {
-    this.companiesModel.find();
+  async findAll(): Promise<Companies[]> {
+    return await this.companiesModel.find().exec();
   }
 
-  async create(createCompany: CreateCompanyDto) {
+  async create(createCompany: CompanyInput): Promise<Companies> {
     const newCompany = new this.companiesModel(createCompany);
     return await newCompany.save();
   }
 
-  async finOne(id: string) {
-    return await this.companiesModel.findById(id);
+  async findOne(id: FindCompanyInput): Promise<Companies> {
+    return await this.companiesModel.findById(id._id);
   }
 
-  async delete(id: string) {
-    return await this.companiesModel.findByIdAndDelete(id);
+  async update(company: UpdateCompanyInput): Promise<Companies> {
+    console.log(company);
+    return await this.companiesModel.findByIdAndUpdate(company._id, company, {
+      new: true,
+    });
   }
 
-  async update(id: string, company: UpdateCompanyDto) {
-    return await this.companiesModel.findByIdAndUpdate(id, company);
+  async delete(_id: string): Promise<any> {
+    console.log(_id);
+    return await this.companiesModel.deleteOne({ _id: _id });
   }
 }

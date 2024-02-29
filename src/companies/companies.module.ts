@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CompaniesController } from './companies.controller';
 import { CompaniesService } from './companies.service';
 import { CompaniesResolver } from './companies.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -14,7 +13,7 @@ import { Companies, CompaniesSchema } from 'src/shemas/companies.schema';
       },
     ]),
   ],
-  controllers: [CompaniesController],
+  controllers: [],
   providers: [CompaniesService, CompaniesResolver],
 })
 export class CompaniesModule {}

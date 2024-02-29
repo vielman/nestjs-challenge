@@ -7,7 +7,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/companiesdb'),
+    MongooseModule.forRoot(
+      'mongodb+srv://pevjose:bBVX3qD7hAKlVC05@cluster0.hatrzgr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    ),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),

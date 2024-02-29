@@ -1,0 +1,62 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CompanyDto {
+  _id: String!
+  name: String!
+  phone: String!
+  address: String
+  web: String
+  is_active: Boolean
+  createdAt: DateTime!
+  updateAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UpdateCompanyDto {
+  _id: String!
+  name: String
+  phone: String
+  address: String
+  web: String
+  is_active: Boolean
+  createdAt: DateTime
+  updateAt: DateTime
+}
+
+type Query {
+  Company: [CompanyDto!]!
+  findCompany(input: FindCompanyInput!): CompanyDto!
+}
+
+input FindCompanyInput {
+  _id: String!
+}
+
+type Mutation {
+  createCompany(input: CompanyInput!): CompanyDto!
+  updeteCompany(input: UpdateCompanyInput!): UpdateCompanyDto!
+  deleteCompany(input: FindCompanyInput!): String!
+}
+
+input CompanyInput {
+  name: String!
+  phone: String!
+  address: String
+  web: String
+  is_active: Boolean
+}
+
+input UpdateCompanyInput {
+  _id: String!
+  name: String
+  phone: String
+  address: String
+  web: String
+  is_active: Boolean
+}
