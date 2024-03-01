@@ -28,14 +28,12 @@ export class CompaniesService {
   }
 
   async update(company: UpdateCompanyInput): Promise<Companies> {
-    console.log(company);
     return await this.companiesModel.findByIdAndUpdate(company._id, company, {
       new: true,
     });
   }
 
   async delete(_id: string): Promise<any> {
-    console.log(_id);
-    return await this.companiesModel.deleteOne({ _id: _id });
+    return await this.companiesModel.findByIdAndDelete({ _id });
   }
 }

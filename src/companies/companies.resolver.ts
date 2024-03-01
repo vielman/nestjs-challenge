@@ -6,7 +6,7 @@ import {
   UpdateCompanyInput,
 } from './inputes/company.input';
 import { CompanyDto, UpdateCompanyDto } from './dto/company.dto';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 
 @Resolver()
 export class CompaniesResolver {
@@ -17,8 +17,10 @@ export class CompaniesResolver {
   }
 
   @Query(() => CompanyDto)
-  findCompany(@Args('input') input: FindCompanyInput) {
-    return this.companiesService.findOne(input);
+  async findCompany(@Args('input') input: FindCompanyInput) {
+    const company = await this.companiesService.findOne(input);
+    if (!company) throw new NotFoundException('Company no found');
+    return company;
   }
 
   @Mutation(() => CompanyDto)
@@ -35,12 +37,15 @@ export class CompaniesResolver {
 
   @Mutation(() => UpdateCompanyDto)
   async updeteCompany(@Args('input') input: UpdateCompanyInput) {
-    return await this.companiesService.update(input);
+    const company = await this.companiesService.update(input);
+    if (!company) throw new NotFoundException('Company no found');
+    return company;
   }
 
   @Mutation(() => String)
   async deleteCompany(@Args('input') input: FindCompanyInput): Promise<any> {
-    await this.companiesService.delete(input._id);
+    const company = await this.companiesService.delete(input._id);
+    if (!company) throw new NotFoundException('Company no found');
     return 'Company Removed.';
   }
 }

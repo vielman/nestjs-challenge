@@ -1,8 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, MinLength } from 'class-validator';
 
 @InputType()
 export class CompanyInput {
   @Field()
+  @IsNotEmpty()
+  @MinLength(3)
   readonly name: string;
 
   @Field()
